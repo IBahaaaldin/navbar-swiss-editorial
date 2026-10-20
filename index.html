@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swiss International Editorial Navbar - Ready-UIs #11</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+            body: ['"Inter"', 'sans-serif'],
+          },
+          colors: {
+            swiss: {
+              red: '#FF3B30',
+              blue: '#002FA7',
+              ink: '#0C0D0E',
+              paper: '#F4F4F0',
+              card: '#16181A',
+              border: '#272A2E',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Kinetic Marquee Ribbon Animation */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: inline-flex;
+      animation: marquee 16s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    /* Swiss Sharp Border Treatments */
+    .swiss-border {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    html:not(.dark) .swiss-border {
+      border: 1px solid rgba(12, 13, 14, 0.15);
+    }
+
+    /* Architectural Grid Line Accents */
+    .grid-lines {
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    html:not(.dark) .grid-lines {
+      background-image: 
+        linear-gradient(to right, rgba(12, 13, 14, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(12, 13, 14, 0.04) 1px, transparent 1px);
+    }
+
+    /* Mobile Sheet Drawer */
+    #mobileSidebar {
+      transition: transform 340ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #mobileBackdrop {
+      transition: opacity 300ms ease;
+    }
+  </style>
+</head>
+<body class="bg-swiss-paper dark:bg-swiss-ink text-swiss-ink dark:text-swiss-paper min-h-screen flex flex-col justify-between p-4 md:p-8 transition-colors duration-300 font-sans grid-lines selection:bg-swiss-blue selection:text-white">
+
+  <!-- TOP HEADER (STRICT SINGLE ROW, WORLD CLOCKS & METADATA) -->
+  <header class="w-full max-w-[840px] mx-auto flex items-center justify-between gap-3 text-xs py-2 px-1 border-b swiss-border pb-3">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-6 h-6 bg-swiss-red text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">
+        +
+      </div>
+      <div class="flex items-center gap-2 overflow-hidden whitespace-nowrap">
+        <span class="font-bold tracking-tight uppercase whitespace-nowrap text-swiss-ink dark:text-white">Bahaa Mohammed</span>
+        <span class="text-slate-400 dark:text-slate-600">//</span>
+        <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 hidden sm:inline uppercase whitespace-nowrap">Swiss Modernist • Issue 11</span>
+      </div>
+    </div>
+
+    <!-- Live World Clocks (DXB & ZRH) -->
+    <div class="flex items-center gap-3 shrink-0 font-mono text-[11px]">
+      <div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 bg-black/5 dark:bg-white/5 border swiss-border">
+        <span class="text-swiss-red font-bold">DXB</span>
+        <span id="dxbClock">00:00:00</span>
+      </div>
+      <div class="hidden md:flex items-center gap-1.5 px-2 py-0.5 bg-black/5 dark:bg-white/5 border swiss-border">
+        <span class="text-swiss-blue font-bold">ZRH</span>
+        <span id="zrhClock">00:00:00</span>
+      </div>
+
+      <!-- Theme Invert Button -->
+      <button id="themeToggleBtn" aria-label="Toggle Theme" class="w-8 h-8 border swiss-border bg-white dark:bg-swiss-card flex items-center justify-center text-swiss-ink dark:text-white hover:bg-swiss-red hover:text-white transition-colors duration-150">
+        <svg id="sunIcon" class="w-3.5 h-3.5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="5" stroke-width="2"/>
+          <path stroke-width="2" stroke-linecap="round" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg id="moonIcon" class="w-3.5 h-3.5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CANVAS (CENTERED HERO & NAVBAR) -->
+  <main class="w-full max-w-[840px] mx-auto my-auto flex flex-col items-center justify-center py-6 md:py-10">
+
+    <!-- DESKTOP NAVBAR CONTAINER -->
+    <nav class="hidden md:flex flex-col w-full bg-white dark:bg-swiss-card border swiss-border relative shadow-lg">
+      
+      <!-- Top Kinetic Ticker Ribbon -->
+      <div class="w-full bg-swiss-ink text-white dark:bg-black text-[10px] font-mono tracking-wider py-1 px-3 overflow-hidden border-b swiss-border whitespace-nowrap flex items-center">
+        <div class="animate-marquee whitespace-nowrap">
+          <span class="mr-6">INTERNATIONAL TYPOGRAPHIC STYLE // CURATED BY BAHAA MOHAMMED</span>
+          <span class="mr-6 text-swiss-red font-bold">●</span>
+          <span class="mr-6">READY-UIS ISSUE NO. 11 // ARCHITECTURAL MINIMALISM</span>
+          <span class="mr-6 text-swiss-blue font-bold">■</span>
+          <span class="mr-6">HELVETICA & GROTESQUE FORM LANGUAGE // 2026 EDITION</span>
+          <span class="mr-6 text-swiss-red font-bold">●</span>
+          <span class="mr-6">INTERNATIONAL TYPOGRAPHIC STYLE // CURATED BY BAHAA MOHAMMED</span>
+          <span class="mr-6 text-swiss-red font-bold">●</span>
+          <span class="mr-6">READY-UIS ISSUE NO. 11 // ARCHITECTURAL MINIMALISM</span>
+          <span class="mr-6 text-swiss-blue font-bold">■</span>
+        </div>
+      </div>
+
+      <!-- Main Navigation Row -->
+      <div class="flex items-center justify-between p-3 gap-4">
+        
+        <!-- Brand Mark -->
+        <a href="#" class="flex items-center gap-2 group">
+          <span class="px-2 py-1 bg-swiss-ink dark:bg-white text-white dark:text-swiss-ink font-mono font-bold text-xs tracking-tighter">
+            SWISS
+          </span>
+          <span class="font-bold text-sm tracking-tight text-swiss-ink dark:text-white group-hover:text-swiss-red transition-colors">
+            ARCHIV
+          </span>
+        </a>
+
+        <!-- Center Editorial Navigation Tabs -->
+        <div class="flex items-center gap-1 font-mono text-xs">
+          <button class="swiss-tab-btn active px-3 py-1.5 border border-swiss-red bg-swiss-red/10 text-swiss-red font-bold transition-all" data-tab="manifesto">
+            01 / MANIFESTO
+          </button>
+          <button class="swiss-tab-btn px-3 py-1.5 border border-transparent hover:border-slate-400 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 transition-all" data-tab="catalog">
+            02 / CATALOG
+          </button>
+          <button class="swiss-tab-btn px-3 py-1.5 border border-transparent hover:border-slate-400 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 transition-all" data-tab="editions">
+            03 / EDITIONS
+          </button>
+          <button class="swiss-tab-btn px-3 py-1.5 border border-transparent hover:border-slate-400 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 transition-all" data-tab="archive">
+            04 / ARCHIVE
+          </button>
+        </div>
+
+        <!-- Right Quick Actions -->
+        <div class="flex items-center gap-2">
+          <!-- Index Dropdown Toggle -->
+          <button id="indexToggleBtn" class="px-3 py-1.5 border swiss-border bg-slate-100 dark:bg-white/5 font-mono text-xs font-semibold text-swiss-ink dark:text-white hover:bg-swiss-blue hover:text-white hover:border-swiss-blue transition-colors flex items-center gap-1.5">
+            <span>INDEX</span>
+            <span id="indexArrow" class="transition-transform duration-200">↓</span>
+          </button>
+
+          <!-- Inquire Copy Button -->
+          <button id="inquireBtn" class="px-3.5 py-1.5 bg-swiss-ink dark:bg-white text-white dark:text-swiss-ink font-mono text-xs font-bold hover:bg-swiss-red dark:hover:bg-swiss-red dark:hover:text-white transition-colors flex items-center gap-1.5">
+            <span id="inquireBtnText">INQUIRE</span>
+            <span id="inquireIcon">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- INDEX DROPDOWN ACCORDION DRAWER -->
+      <div id="indexDrawer" class="hidden border-t swiss-border bg-slate-50 dark:bg-black/40 p-4 transition-all">
+        <div class="grid grid-cols-3 gap-4 text-xs font-mono">
+          <div class="border-l-2 border-swiss-red pl-3 space-y-1">
+            <div class="text-[10px] text-slate-400 uppercase">Section A</div>
+            <div class="font-bold text-swiss-ink dark:text-white">Editorial Typography</div>
+            <p class="text-[11px] text-slate-500 font-body">Asymmetric balance, strict grids, and grotesque weights.</p>
+          </div>
+          <div class="border-l-2 border-swiss-blue pl-3 space-y-1">
+            <div class="text-[10px] text-slate-400 uppercase">Section B</div>
+            <div class="font-bold text-swiss-ink dark:text-white">Spatial Systems</div>
+            <p class="text-[11px] text-slate-500 font-body">Mathematical ratios derived from the DIN 476 paper standard.</p>
+          </div>
+          <div class="border-l-2 border-swiss-ink dark:border-white pl-3 space-y-1">
+            <div class="text-[10px] text-slate-400 uppercase">Section C</div>
+            <div class="font-bold text-swiss-ink dark:text-white">Chromatic Discipline</div>
+            <p class="text-[11px] text-slate-500 font-body">Monochrome foundation with single-point vermilion focus.</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MOBILE NAVBAR BAR (CENTERED, CLEAN) -->
+    <div class="flex md:hidden w-full items-center justify-between p-3 bg-white dark:bg-swiss-card border swiss-border">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 bg-swiss-ink dark:bg-white text-white dark:text-swiss-ink font-mono font-bold text-xs">
+          SWISS
+        </span>
+        <span class="font-bold text-sm text-swiss-ink dark:text-white uppercase whitespace-nowrap">Archiv</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="mobileInquireBtn" class="px-2.5 py-1 bg-swiss-red text-white font-mono text-xs font-bold whitespace-nowrap">
+          INQUIRE
+        </button>
+        <button id="mobileMenuOpenBtn" class="w-8 h-8 border swiss-border flex items-center justify-center text-swiss-ink dark:text-white" aria-label="Open Menu">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- HERO DISPLAY CARD (SWISS POSTER AESTHETIC) -->
+    <div class="w-full mt-8 p-6 md:p-8 bg-white dark:bg-swiss-card border swiss-border flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2 px-2 py-0.5 bg-swiss-blue text-white font-mono text-[10px] uppercase tracking-widest font-bold">
+          Bauhaus & Swiss Style
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter text-swiss-ink dark:text-white leading-none uppercase">
+          Typographic<br>Form Follows Function
+        </h1>
+        <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 max-w-md font-body leading-relaxed">
+          Rooted in the 1950s Swiss International Style. Mathematical grid geometry, high contrast contrast-ratio typography, and kinetic typographic tickers.
+        </p>
+      </div>
+
+      <!-- Poster Index Card -->
+      <div class="border swiss-border p-4 bg-slate-50 dark:bg-black/30 font-mono text-xs w-full md:w-56 shrink-0 space-y-2">
+        <div class="flex justify-between border-b swiss-border pb-1 text-slate-400 text-[10px]">
+          <span>FIG 11.0</span>
+          <span>ZURICH</span>
+        </div>
+        <div class="text-swiss-red font-bold text-lg">90° GRID</div>
+        <div class="text-[11px] text-slate-500 leading-tight font-body">
+          Engineered for digital craft by Bahaa Mohammed.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MOBILE SLIDE-IN SIDEBAR SHEET & BACKDROP -->
+  <div id="mobileBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  <aside id="mobileSidebar" class="fixed top-0 right-0 bottom-0 w-[290px] max-w-[85vw] bg-white dark:bg-swiss-card border-l swiss-border z-50 p-6 flex flex-col justify-between translate-x-full shadow-2xl overflow-y-auto">
+    <div class="space-y-6">
+      <!-- Mobile Sheet Header -->
+      <div class="flex items-center justify-between pb-4 border-b swiss-border">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 bg-swiss-red text-white font-mono font-bold text-xs">+</span>
+          <span class="font-bold text-sm uppercase text-swiss-ink dark:text-white whitespace-nowrap">Swiss Archiv</span>
+        </div>
+        <button id="mobileMenuCloseBtn" class="w-8 h-8 border swiss-border flex items-center justify-center text-swiss-ink dark:text-white" aria-label="Close Menu">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Navigation Links -->
+      <div class="space-y-1 font-mono text-xs">
+        <button class="mobile-tab-btn w-full px-3 py-2.5 bg-swiss-red text-white text-left font-bold flex items-center justify-between">
+          <span>01 / MANIFESTO</span>
+          <span>→</span>
+        </button>
+        <button class="mobile-tab-btn w-full px-3 py-2.5 border swiss-border text-left text-slate-700 dark:text-slate-300 hover:text-swiss-red flex items-center justify-between">
+          <span>02 / CATALOG</span>
+          <span>→</span>
+        </button>
+        <button class="mobile-tab-btn w-full px-3 py-2.5 border swiss-border text-left text-slate-700 dark:text-slate-300 hover:text-swiss-red flex items-center justify-between">
+          <span>03 / EDITIONS</span>
+          <span>→</span>
+        </button>
+        <button class="mobile-tab-btn w-full px-3 py-2.5 border swiss-border text-left text-slate-700 dark:text-slate-300 hover:text-swiss-red flex items-center justify-between">
+          <span>04 / ARCHIVE</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Clocks in Sheet -->
+      <div class="p-3 border swiss-border space-y-2 font-mono text-xs">
+        <div class="text-[10px] text-slate-400 uppercase">Synchronized Zones</div>
+        <div class="flex justify-between text-slate-700 dark:text-slate-300">
+          <span>Dubai (GST)</span>
+          <span id="mDxbClock" class="font-bold text-swiss-red">00:00:00</span>
+        </div>
+        <div class="flex justify-between text-slate-700 dark:text-slate-300">
+          <span>Zurich (CET)</span>
+          <span id="mZrhClock" class="font-bold text-swiss-blue">00:00:00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Footer Info -->
+    <div class="pt-6 border-t swiss-border space-y-3">
+      <div class="font-mono text-xs">
+        <div class="font-bold text-swiss-ink dark:text-white uppercase whitespace-nowrap">Bahaa Mohammed</div>
+        <div class="text-[10px] text-slate-400 whitespace-nowrap">Design & Frontend Engineer</div>
+      </div>
+      <button id="mobileSheetInquireBtn" class="w-full py-2.5 bg-swiss-blue text-white font-mono text-xs font-bold text-center active:scale-95 transition-all">
+        INQUIRE: bahaam.coding@gmail.com
+      </button>
+    </div>
+  </aside>
+
+  <!-- FOOTER -->
+  <footer class="w-full max-w-[840px] mx-auto flex items-center justify-between text-xs text-slate-500 py-3 border-t swiss-border font-mono">
+    <div class="flex items-center gap-2 whitespace-nowrap">
+      <span>DESIGNED BY</span>
+      <a href="https://github.com/IBahaaaldin" target="_blank" class="font-bold text-swiss-ink dark:text-white hover:text-swiss-red transition-colors whitespace-nowrap">BAHAA MOHAMMED</a>
+    </div>
+    <div class="flex items-center gap-4 text-xs">
+      <a href="https://www.instagram.com/ibahaaaldincoding" target="_blank" class="hover:text-swiss-red transition-colors whitespace-nowrap">@ibahaaaldincoding</a>
+      <span class="hidden sm:inline">•</span>
+      <span class="hidden sm:inline">READY-UIS #11</span>
+    </div>
+  </footer>
+
+  <script>
+    // --- Live World Clocks (DXB & ZRH) ---
+    function updateClocks() {
+      const now = new Date();
+      const dxbTime = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Dubai',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      }).format(now);
+
+      const zrhTime = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Zurich',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      }).format(now);
+
+      const dxbEl = document.getElementById('dxbClock');
+      const zrhEl = document.getElementById('zrhClock');
+      const mDxbEl = document.getElementById('mDxbClock');
+      const mZrhEl = document.getElementById('mZrhClock');
+
+      if (dxbEl) dxbEl.textContent = dxbTime;
+      if (zrhEl) zrhEl.textContent = zrhTime;
+      if (mDxbEl) mDxbEl.textContent = dxbTime;
+      if (mZrhEl) mZrhEl.textContent = zrhTime;
+    }
+    updateClocks();
+    setInterval(updateClocks, 1000);
+
+    // --- Tab Switching ---
+    const tabs = document.querySelectorAll('.swiss-tab-btn');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('border-swiss-red', 'bg-swiss-red/10', 'text-swiss-red', 'font-bold');
+          t.classList.add('border-transparent', 'text-slate-600', 'dark:text-slate-300');
+        });
+        tab.classList.remove('border-transparent', 'text-slate-600', 'dark:text-slate-300');
+        tab.classList.add('border-swiss-red', 'bg-swiss-red/10', 'text-swiss-red', 'font-bold');
+      });
+    });
+
+    // --- Index Drawer Accordion ---
+    const indexToggleBtn = document.getElementById('indexToggleBtn');
+    const indexDrawer = document.getElementById('indexDrawer');
+    const indexArrow = document.getElementById('indexArrow');
+
+    if (indexToggleBtn && indexDrawer) {
+      indexToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        indexDrawer.classList.toggle('hidden');
+        if (indexDrawer.classList.contains('hidden')) {
+          if (indexArrow) indexArrow.textContent = '↓';
+        } else {
+          if (indexArrow) indexArrow.textContent = '↑';
+        }
+      });
+    }
+
+    // --- Theme Toggle ---
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+    }
+
+    // --- Inquire / Copy Email ---
+    const inquireBtn = document.getElementById('inquireBtn');
+    const inquireBtnText = document.getElementById('inquireBtnText');
+    const inquireIcon = document.getElementById('inquireIcon');
+
+    function triggerInquire(textEl, iconEl) {
+      navigator.clipboard?.writeText('bahaam.coding@gmail.com');
+      if (textEl) textEl.textContent = 'COPIED! ✨';
+      if (iconEl) iconEl.textContent = '✓';
+
+      setTimeout(() => {
+        if (textEl) textEl.textContent = 'INQUIRE';
+        if (iconEl) iconEl.textContent = '→';
+      }, 2200);
+    }
+
+    if (inquireBtn) {
+      inquireBtn.addEventListener('click', () => triggerInquire(inquireBtnText, inquireIcon));
+    }
+
+    const mobileInquireBtn = document.getElementById('mobileInquireBtn');
+    if (mobileInquireBtn) {
+      mobileInquireBtn.addEventListener('click', () => {
+        navigator.clipboard?.writeText('bahaam.coding@gmail.com');
+        mobileInquireBtn.textContent = 'COPIED! ✨';
+        setTimeout(() => mobileInquireBtn.textContent = 'INQUIRE', 2200);
+      });
+    }
+
+    const mobileSheetInquireBtn = document.getElementById('mobileSheetInquireBtn');
+    if (mobileSheetInquireBtn) {
+      mobileSheetInquireBtn.addEventListener('click', () => {
+        navigator.clipboard?.writeText('bahaam.coding@gmail.com');
+        mobileSheetInquireBtn.textContent = 'EMAIL COPIED! ✓';
+        setTimeout(() => mobileSheetInquireBtn.textContent = 'INQUIRE: bahaam.coding@gmail.com', 2200);
+      });
+    }
+
+    // --- Mobile Sidebar Sheet Drawer ---
+    const mobileMenuOpenBtn = document.getElementById('mobileMenuOpenBtn');
+    const mobileMenuCloseBtn = document.getElementById('mobileMenuCloseBtn');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+    function openMobileMenu() {
+      mobileSidebar.classList.remove('translate-x-full');
+      mobileBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeMobileMenu() {
+      mobileSidebar.classList.add('translate-x-full');
+      mobileBackdrop.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    if (mobileMenuOpenBtn) mobileMenuOpenBtn.addEventListener('click', openMobileMenu);
+    if (mobileMenuCloseBtn) mobileMenuCloseBtn.addEventListener('click', closeMobileMenu);
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
+
+    document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mobile-tab-btn').forEach(b => {
+          b.classList.remove('bg-swiss-red', 'text-white', 'font-bold');
+          b.classList.add('border', 'swiss-border', 'text-slate-700', 'dark:text-slate-300');
+        });
+        btn.classList.add('bg-swiss-red', 'text-white', 'font-bold');
+        btn.classList.remove('border', 'swiss-border', 'text-slate-700', 'dark:text-slate-300');
+      });
+    });
+  </script>
+</body>
+</html>
